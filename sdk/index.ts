@@ -55,6 +55,7 @@ export class BotSDK {
     private connectionListeners = new Set<(state: ConnectionState, attempt?: number) => void>();
     private connectPromise: Promise<void> | null = null;
     private sdkClientId: string;
+    private launchedBrowser: any = null;
 
     // Reconnection state
     private connectionState: ConnectionState = 'disconnected';
@@ -267,6 +268,14 @@ export class BotSDK {
             });
             this.ws = null;
         }
+
+        if (this.launchedBrowser) {
+            try {
+                await this.launchedBrowser.close();
+            } catch {}
+            this.launchedBrowser = null;
+        }
+
         this.connectPromise = null;
         this.reconnectAttempt = 0;
         this.setConnectionState('disconnected');
@@ -382,6 +391,11 @@ export class BotSDK {
         const url = this.buildClientUrl();
         console.log(`[BotSDK] Opening browser: ${url}`);
 
+        if (process.env.SDK_USE_PUPPETEER === 'true' || process.env.SDK_USE_PUPPETEER === '1') {
+            await this.launchBrowserWithPuppeteer(url);
+            return;
+        }
+
         const { exec } = await import('child_process');
 
         const command = process.platform === 'darwin'
@@ -399,6 +413,48 @@ export class BotSDK {
                 }
             });
         });
+    }
+
+    private async launchBrowserWithPuppeteer(url: string): Promise<void> {
+        const puppeteer = await this.loadPuppeteer();
+        const headless = !(process.env.HEADLESS === 'false' || process.env.HEADLESS === '0');
+        const browser = (process.env.SDK_PUPPETEER_BROWSER || 'firefox').toLowerCase();
+
+        const launchOptions: any = {
+            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+            headless
+        };
+
+        if (browser === 'firefox') {
+            launchOptions.browser = 'firefox';
+            launchOptions.extraPrefsFirefox = {
+                'media.autoplay.default': 0
+            };
+        } else {
+            launchOptions.browser = 'chrome';
+            launchOptions.args = [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage'
+            ];
+        }
+
+        this.launchedBrowser = await puppeteer.launch(launchOptions);
+
+        const page = await this.launchedBrowser.newPage();
+        await page.goto(url, { waitUntil: 'domcontentloaded' });
+    }
+
+    private async loadPuppeteer(): Promise<any> {
+        try {
+            return (await import('puppeteer')).default;
+        } catch {}
+
+        try {
+            return (await import('../gateway/node_modules/puppeteer')).default;
+        } catch (error: any) {
+            throw new Error(`Puppeteer not available for SDK browser launch: ${error?.message || error}`);
+        }
     }
 
     /**
@@ -799,11 +855,6 @@ export class BotSDK {
     /** Use an inventory item on a location. */
     async sendUseItemOnLoc(itemSlot: number, x: number, z: number, locId: number): Promise<ActionResult> {
         return this.sendAction({ type: 'useItemOnLoc', itemSlot, x, z, locId, reason: 'SDK' });
-    }
-
-    /** Use an inventory item on an NPC. */
-    async sendUseItemOnNpc(itemSlot: number, npcIndex: number): Promise<ActionResult> {
-        return this.sendAction({ type: 'useItemOnNpc', itemSlot, npcIndex, reason: 'SDK' });
     }
 
     /** Click a dialog option by index. */
