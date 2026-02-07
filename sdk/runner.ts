@@ -153,7 +153,9 @@ async function getOrCreateConnection(): Promise<BotConnection> {
 
     let gatewayUrl = 'ws://localhost:7780';
     if (server) {
-        gatewayUrl = `wss://${server}/gateway`;
+        // Local servers are usually plain HTTP/WS in development.
+        const isLocal = server === 'localhost' || server.startsWith('localhost:') || server === '127.0.0.1' || server.startsWith('127.0.0.1:');
+        gatewayUrl = isLocal ? `ws://${server}/gateway` : `wss://${server}/gateway`;
     }
 
     console.error(`[Runner] Connecting to bot "${username}"...`);
@@ -164,6 +166,7 @@ async function getOrCreateConnection(): Promise<BotConnection> {
         gatewayUrl,
         connectionMode: 'control',
         autoReconnect: true,
+        browserLaunchTimeout: parseInt(process.env.BROWSER_LAUNCH_TIMEOUT || '30000', 10),
         showChat
     });
 
