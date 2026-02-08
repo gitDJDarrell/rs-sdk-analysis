@@ -1,5 +1,6 @@
 [hazeelcultquest]
 scope=perm
+transmit=yes
 
 [hazeelcult_valves]
 scope=perm

@@ -1,5 +1,6 @@
 [crestquest]
 scope=perm
+transmit=yes
 
 [crest_spells_levers_gauntlets]
 scope=perm

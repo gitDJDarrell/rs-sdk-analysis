@@ -1,5 +1,6 @@
 [upass]
 scope=perm
+transmit=yes
 
 [ibanmulti]
 scope=perm

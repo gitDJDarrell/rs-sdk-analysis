@@ -3,6 +3,7 @@
 
 import { BotSDK } from './index';
 import { BotActions } from './actions';
+import { QuestSDK } from './quests';
 import { formatWorldState } from './formatter';
 import type { BotWorldState } from './types';
 import { readFileSync, existsSync } from 'fs';
@@ -21,6 +22,7 @@ export class BotDisconnectedError extends Error {
 export interface ScriptContext {
     bot: BotActions;
     sdk: BotSDK;
+    quest: QuestSDK;
     log: typeof console.log;
     warn: typeof console.warn;
     error: typeof console.error;
@@ -313,6 +315,7 @@ export async function runScript(
     const ctx: ScriptContext = {
         bot,
         sdk,
+        quest: new QuestSDK(sdk),
         log: capturedLog,
         warn: capturedWarn,
         error: capturedError

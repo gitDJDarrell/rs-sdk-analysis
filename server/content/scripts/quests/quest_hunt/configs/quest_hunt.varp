@@ -1,5 +1,6 @@
 [hunt]
 scope=perm
+transmit=yes
 
 [hunt_store_employed]
 scope=perm

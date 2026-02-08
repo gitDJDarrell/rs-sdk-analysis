@@ -1,5 +1,6 @@
 [sheepherderquest]
 scope=perm
+transmit=yes
 
 [sheepherdervar]
 scope=perm

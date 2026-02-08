@@ -219,6 +219,8 @@ export interface BotWorldState {
     skills: SkillState[];
     inventory: InventoryItem[];
     equipment: InventoryItem[];
+    /** Raw varps (player variables) indexed by varp ID */
+    varps?: number[];
     nearbyNpcs: NearbyNpc[];
     nearbyPlayers: NearbyPlayer[];
     nearbyLocs: NearbyLoc[];
@@ -275,7 +277,8 @@ export type BotAction =
     | { type: 'bankDeposit'; slot: number; amount: number; reason: string }
     | { type: 'bankWithdraw'; slot: number; amount: number; reason: string }
     | { type: 'scanNearbyLocs'; radius?: number; reason: string }
-    | { type: 'scanGroundItems'; radius?: number; reason: string };
+    | { type: 'scanGroundItems'; radius?: number; reason: string }
+    | { type: 'readComponent'; componentName: string; reason: string };
 
 export interface ActionResult {
     success: boolean;

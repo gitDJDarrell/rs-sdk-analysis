@@ -1,5 +1,6 @@
 [chompybird]
 scope=perm
+transmit=yes
 
 // likely used for all kinds of quest info
 [chompybird_kills]

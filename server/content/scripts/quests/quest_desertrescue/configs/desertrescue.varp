@@ -1,5 +1,6 @@
 [desertrescue]
 scope=perm
+transmit=yes
 
 [desertrescue_map_mechanisms]
 scope=perm

@@ -1,5 +1,6 @@
 [totemquest]
 scope=perm
+transmit=yes
 
 [handelmort_traps_disabled]
 scope=perm

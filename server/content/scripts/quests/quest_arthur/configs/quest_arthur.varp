@@ -1,5 +1,6 @@
 [arthur]
 scope=perm
+transmit=yes
 
 [excalibur_components_progress]
 scope=perm

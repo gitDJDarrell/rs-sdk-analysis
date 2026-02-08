@@ -69,6 +69,7 @@ export class BotStateCollector implements ScanProvider {
             skills: this.collectSkills(),
             inventory: this.collectInventory(INVENTORY_INTERFACE_ID),
             equipment: this.collectInventory(EQUIPMENT_INTERFACE_ID),
+            varps: Array.from(c.varps || []),
             combatStyle: this.collectCombatStyle(),
             nearbyNpcs: this.collectNearbyNpcs(),
             nearbyPlayers: this.collectNearbyPlayers(),

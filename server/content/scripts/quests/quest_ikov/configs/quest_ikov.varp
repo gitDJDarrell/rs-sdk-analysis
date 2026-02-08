@@ -1,5 +1,6 @@
 [ikov]
 scope=perm
+transmit=yes
 
 [ikov_dungeon]
 scope=perm

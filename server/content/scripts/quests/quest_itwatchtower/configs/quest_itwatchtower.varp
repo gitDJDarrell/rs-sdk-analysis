@@ -1,5 +1,6 @@
 [itwatchtower]
 scope=perm
+transmit=yes
 
 [itwatchtower_bits]
 scope=perm

@@ -1,5 +1,6 @@
 [priestperil]
 scope=perm
+transmit=yes
 
 [priestperil_mausoleum]
 scope=perm

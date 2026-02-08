@@ -1,5 +1,6 @@
 [mcannon]
 scope=perm
+transmit=yes
 
 [mcannonmulti]
 scope=perm
