@@ -19,6 +19,7 @@ import type {
     BotStatus
 } from './types';
 import * as pathfinding from './pathfinding';
+import { QuestSDK } from './quests';
 
 interface SyncToSDKMessage {
     type: 'sdk_connected' | 'sdk_state' | 'sdk_action_result' | 'sdk_error' | 'sdk_screenshot_response';
@@ -46,6 +47,7 @@ interface PendingScreenshot {
 
 export class BotSDK {
     readonly config: Required<SDKConfig>;
+    readonly quest: QuestSDK;
     private ws: WebSocket | null = null;
     private state: BotWorldState | null = null;
     private stateReceivedAt: number = 0;
@@ -82,6 +84,7 @@ export class BotSDK {
             showChat: config.showChat ?? false
         };
         this.sdkClientId = `sdk-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        this.quest = new QuestSDK(this);
     }
 
     // ============ Connection ============
