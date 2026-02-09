@@ -1,5 +1,6 @@
 [fishingcompo]
 scope=perm
+transmit=yes
 
 [hemenster_comp_stage]
 scope=perm

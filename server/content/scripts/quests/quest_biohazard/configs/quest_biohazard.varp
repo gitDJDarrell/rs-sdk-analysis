@@ -1,5 +1,6 @@
 [biohazard]
 scope=perm
+transmit=yes
 
 [bioerrand]
 scope=perm

@@ -1,5 +1,6 @@
 [princequest]
 scope=perm
+transmit=yes
 
 [prince_keystatus]
 scope=perm

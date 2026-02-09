@@ -1,5 +1,6 @@
 [murderquest]
 scope=perm
+transmit=yes
 
 [murder_poisonproof_progress]
 scope=perm

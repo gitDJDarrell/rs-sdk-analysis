@@ -1,5 +1,6 @@
 [itgronigen]
 scope=perm
+transmit=yes
 
 [itkeepgatelock]
 scope=perm

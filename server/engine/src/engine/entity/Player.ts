@@ -76,6 +76,66 @@ import UpdateIgnoreList from '#/network/game/server/model/UpdateIgnoreList.js';
 
 const levelExperience = new Int32Array(99);
 
+// List of quest varp ids that are sent to the client.
+const QUEST_VARP_IDS = new Set<number>([
+    0, // Dwarf Cannon
+    5, // Holy Grail
+    10, // Clock Tower
+    11, // Fishing Contest
+    14, // Merlin's Crystal
+    17, // Fight Arena
+    26, // Temple of Ikov
+    29, // Cook's Assistant
+    30, // Monk's Friend
+    31, // Doric's Quest
+    32, // haunted
+    60, // Sheep Herder
+    62, // Goblin Diplomacy
+    63, // Rune Mysteries Quest
+    65, // Waterfall Quest
+    67, // Witch's Potion
+    68, // Biohazard
+    71, // hunt
+    76, // Scorpion Catcher
+    80, // Drudic Ritual
+    107, // The Restless Ghost
+    111, // Tree Gnome Village
+    112, // Observatory Quest
+    116, // Shilo Village
+    122, // The Knight's Sword
+    130, // Black Knight's Fortress
+    131, // Digsite Quest
+    139, // Legends Quest
+    144, // Romeo & Juliet
+    145, // Shield of Arrav
+    146, // Phoenix Gang
+    147, // Lost City
+    148, // Family Crest
+    150, // The Grand Tree
+    159, // Sea Slug Quest
+    160, // Imp Catcher
+    161, // Underground Pass
+    165, // Plague City
+    175, // Jungle Potion
+    176, // Dragon Slayer
+    178, // Vampire Slayer
+    179, // Sheep Shearer
+    180, // Gertrude's Cat
+    188, // Hero's Quest
+    192, // Murder Mystery
+    197, // The Tourist Trap
+    200, // Tribal Totem
+    212, // Watch Tower
+    222, // Demon Slayer
+    223, // Hazeel Cult
+    226, // Witches House
+    273, // Prince Ali Rescue
+    293, // Big Chompy Bird Hunting
+    299, // Elemental Workshop
+    302, // Priest In Peril
+    307  // Druid Spirit
+]);
+
 let acc = 0;
 for (let i = 0; i < 99; i++) {
     const level = i + 1;
@@ -507,6 +567,7 @@ export default class Player extends PathingEntity {
                 this.writeVarp(varp, value);
             }
         }
+        this.sendQuestVarps();
         this.write(new ResetAnims());
 
         const loginTrigger = ScriptProvider.getByTriggerSpecific(ServerTriggerType.LOGIN, -1, -1);
@@ -537,6 +598,7 @@ export default class Player extends PathingEntity {
                 this.writeVarp(varp, value);
             }
         }
+        this.sendQuestVarps();
         // reload entity info (overkill? does the client have some logic around this?)
         this.buildArea.clear(true);
         // rebuild scene later this tick (note: rebuild won't run on the client if you're in the same zone!)
@@ -1749,6 +1811,17 @@ export default class Player extends PathingEntity {
             this.write(new VarpSmall(id, value));
         } else {
             this.write(new VarpLarge(id, value));
+        }
+    }
+
+    /**
+     * Send quest varps to the client.
+     * This is used to update the client with the latest quest progress.
+     */
+    private sendQuestVarps(): void {
+        for (const varpId of QUEST_VARP_IDS) {
+            if (varpId < 0 || varpId >= this.vars.length) continue;
+            this.writeVarp(varpId, this.vars[varpId]);
         }
     }
 

@@ -1,5 +1,6 @@
 [dragonquest]
 scope=perm
+transmit=yes
 
 [dragonquestvar]
 type=int

@@ -1,5 +1,6 @@
 [blackarmgang]
 scope=perm
+transmit=yes
 
 [phoenixgang]
 scope=perm

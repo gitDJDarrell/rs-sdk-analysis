@@ -1,5 +1,6 @@
 [fluffs]
 scope=perm
+transmit=yes
 
 [fluffs_crate]
 type=coord

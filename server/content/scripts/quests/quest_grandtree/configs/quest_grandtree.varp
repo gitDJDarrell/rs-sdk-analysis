@@ -1,5 +1,6 @@
 [grandtree]
 scope=perm
+transmit=yes
 
 [daconia_rock_root]
 scope=perm

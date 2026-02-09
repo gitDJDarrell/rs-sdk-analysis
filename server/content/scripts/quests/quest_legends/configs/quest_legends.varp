@@ -1,5 +1,6 @@
 [legendsquest]
 scope=perm
+transmit=yes
 
 [legends_bits]
 scope=perm

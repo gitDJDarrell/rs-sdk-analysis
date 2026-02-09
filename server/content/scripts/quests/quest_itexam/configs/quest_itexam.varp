@@ -1,5 +1,6 @@
 [itexamlevel]
 scope=perm
+transmit=yes
 
 [itexam_errands]
 scope=perm

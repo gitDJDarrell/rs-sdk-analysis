@@ -5,6 +5,7 @@ protect=no
 
 [druidspirit]
 scope=perm
+transmit=yes
 
 [druidspirit_bits]
 scope=perm

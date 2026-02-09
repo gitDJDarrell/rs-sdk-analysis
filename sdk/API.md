@@ -288,6 +288,7 @@ interface BotWorldState {
   skills: SkillState[];
   inventory: InventoryItem[];
   equipment: InventoryItem[];
+  varps?: number[]; // Raw varps (player variables) indexed by varp ID
   nearbyNpcs: NearbyNpc[];
   nearbyPlayers: NearbyPlayer[];
   nearbyLocs: NearbyLoc[];
