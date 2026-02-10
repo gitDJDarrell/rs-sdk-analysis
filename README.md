@@ -41,6 +41,8 @@ bun bots/{username}/script.ts
 
 Chat is off by default to prevent scamming and prompt injection attacks, but you can opt in  with `SHOW_CHAT=true` in the bot.env file
 
+For a comprehensive walkthrough of setting up your agent and bot from scratch, see **[AGENT_GETTING_STARTED.md](AGENT_GETTING_STARTED.md)**.
+
 Warning: The demo server is offered as a convenience, and we do not guarantee uptime or data persistence. Hold your accounts lightly, and consider hosting your own server instance. Please do not manually play on the demo server. 
 
 
