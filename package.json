@@ -1,7 +1,9 @@
 {
   "name": "server",
   "private": true,
-  "workspaces": ["mcp"],
+  "workspaces": [
+    "mcp"
+  ],
   "devDependencies": {
     "@types/bun": "latest"
   },
@@ -10,5 +12,8 @@
   },
   "dependencies": {
     "@inquirer/prompts": "^7.5.3"
+  },
+  "scripts": {
+    "apple-container": "bun scripts/apple-container.ts"
   }
 }

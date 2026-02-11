@@ -455,8 +455,8 @@ export class BotSDK {
         const gatewayUrl = this.config.gatewayUrl || `ws://${this.config.host}:${this.config.port}`;
 
         if (gatewayUrl.includes('localhost') || gatewayUrl.includes('127.0.0.1')) {
-            // Local development: assume client on port 8888
-            return `http://localhost:8888/bot?bot=${encodeURIComponent(this.config.botUsername)}&password=${encodeURIComponent(this.config.password)}`;
+            // Local development: assume client on port 8080
+            return `http://localhost:8080/bot?bot=${encodeURIComponent(this.config.botUsername)}&password=${encodeURIComponent(this.config.password)}`;
         }
 
         // Remote: assume same host with /bot path

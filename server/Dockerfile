@@ -14,6 +14,7 @@ WORKDIR /opt/server
 # Copy only package files first
 COPY engine/package.json engine/bun.lock /opt/server/engine/
 COPY gateway/package.json gateway/bun.lock /opt/server/gateway/
+COPY webclient/package.json webclient/bun.lock /opt/server/webclient/
 
 # Install engine deps with bun cache mount
 WORKDIR /opt/server/engine
@@ -22,6 +23,11 @@ RUN --mount=type=cache,target=/root/.bun/install/cache \
 
 # Install gateway deps with bun cache mount
 WORKDIR /opt/server/gateway
+RUN --mount=type=cache,target=/root/.bun/install/cache \
+    bun install
+
+# Install webclient deps with bun cache mount
+WORKDIR /opt/server/webclient
 RUN --mount=type=cache,target=/root/.bun/install/cache \
     bun install
 
@@ -34,6 +40,10 @@ COPY content /opt/server/content
 COPY webclient /opt/server/webclient
 COPY engine /opt/server/engine
 COPY gateway /opt/server/gateway
+
+# Build webclient (outputs to webclient/out/)
+WORKDIR /opt/server/webclient
+RUN bun run build
 
 # Patch and build engine
 WORKDIR /opt/server/engine
